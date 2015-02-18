@@ -1,0 +1,27 @@
+doctype html
+html(ng-app='signal')
+    head
+        title Sample System
+        link(rel='stylesheet', href='/css/main.css')
+        link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+
+    body
+        nav.navbar.navbar-fixed-top.container(ng-controller='common')
+            div.navbar-header
+                a.navbar-brand(href="#") EC2 Signal
+            div.collapse.navbar-collapse(collapse="navbarCollapsed")
+                ul.nav.navbar-nav
+                    li.active
+                        a(ui-sref='main') Main
+                    li
+                        a(ui-sref='setting') Setting
+                ul.nav.navbar-nav.navbar-right
+                    li(ng-hide="username")
+                        a(href="/auth/facebook/") Facebook Login
+                    li(ng-show="username")
+                        a(ng-click="logout()" href="#") Logout ({{ username }})
+        div.container(ui-view)
+
+        script(type='text/javascript', src='bower_components/angular/angular.min.js')
+        script(type='text/javascript',     src='bower_components/angular-ui-router/release/angular-ui-router.min.js')
+        script(type='text/javascript', src='scripts/application.js')

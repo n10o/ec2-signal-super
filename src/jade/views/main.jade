@@ -1,0 +1,28 @@
+div(ng-controller="MainCtrl")
+    h3 {{ title }}
+    table(class="table table-condensed")
+        thead
+            tr
+                th
+                    a(href="" ng-click="predicate = 'Status'; reverse=!reverse") Status
+                th
+                    a(href="" ng-click="predicate = 'TagName'; reverse=!reverse") Name
+                th
+                    a(href="" ng-click="predicate = 'HostName'; reverse=!reverse") HostName
+                th
+                    a(href="" ng-click="predicate = 'ID'; reverse=!reverse") InstanceId
+                th
+                    a(href="" ng-click="predicate = 'Env'; reverse=!reverse") Env
+                th
+                    a(href="" ng-click="predicate = 'Signal'; reverse=!reverse") Signal
+        tbody(ng-hide="showLoading")
+            tr(ng-repeat="instance in filteredInstanceList = ( instanceList | orderBy:predicate:reverse)" ng-class="{hoverrow: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="clickRow(instance.TagName)")
+                td {{ instance.Status }}
+                td {{ instance.TagName }}
+                td {{ instance.HostName }}
+                td {{ instance.ID }}
+                td {{ instance.Env }}
+                td {{ instance.Signal }}
+    div(ng-show="showLoading")
+        img(src="/images/loading.gif" height="30px")
+        span Now Loading...

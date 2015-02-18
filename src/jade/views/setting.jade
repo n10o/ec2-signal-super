@@ -1,0 +1,5 @@
+div(ng-controller="SettingCtrl")
+    h1 {{ title }}
+    div
+        p(ng-hide='username') ログインしてください。
+        p(ng-show="username") {{ username }} さんの設定

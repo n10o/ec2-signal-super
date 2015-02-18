@@ -1,0 +1,16 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+  color: #00b7ff;
+}
+.hopin {
+  background-color: #dff0d8;
+}
+.container {
+  max-width: 730px;
+}
+.glyphicon {
+  font-size: 30px;
+}
