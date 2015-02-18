@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('signal', ['ui.router'])
+angular.module('signal', ['ui.router', 'ui.bootstrap'])
     .value('host', 'http://localhost:3000/')
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         // pushState enable(need setting server rewrite)
@@ -62,7 +62,7 @@ angular.module('signal', ['ui.router'])
             authCtrl.isloggedin().then(function(res){
                 //console.table(res);
                 // TODO 直接FBのデータを使わず、システム内のDBから引く
-                UserData.Name = res.data.displayName;
+                UserData.Name = res.data.name;
                 $scope.username = UserData.Name;
             });
         };

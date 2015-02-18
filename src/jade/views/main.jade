@@ -1,5 +1,13 @@
 div(ng-controller="MainCtrl")
-    h3 {{ title }}
+    div.information
+        alert(ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)") {{alert.msg}}
+    div.btn-group
+        button.btn.btn-success(ng-model="radioModal" btn-radio="'dev'") dev
+        button.btn.btn-success(ng-model="radioModal" btn-radio="'biz'") biz
+    div.search
+        h3
+            input(type="text" ng-model="keyword" placeholder="Filter Keyword")
+
     table(class="table table-condensed")
         thead
             tr
@@ -16,7 +24,7 @@ div(ng-controller="MainCtrl")
                 th
                     a(href="" ng-click="predicate = 'Signal'; reverse=!reverse") Signal
         tbody(ng-hide="showLoading")
-            tr(ng-repeat="instance in filteredInstanceList = ( instanceList | orderBy:predicate:reverse)" ng-class="{hoverrow: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="clickRow(instance.TagName)")
+            tr(ng-repeat="instance in filteredInstanceList = ( instanceList | filter:keyword | filter:radioModal | orderBy:predicate:reverse)" ng-class="{hoverrow: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-click="clickRow(instance.TagName)")
                 td {{ instance.Status }}
                 td {{ instance.TagName }}
                 td {{ instance.HostName }}

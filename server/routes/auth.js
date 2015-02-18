@@ -16,13 +16,27 @@ passport.use(new FacebookStrategy({
             // TODO
         }
         process.nextTick(function () {
-            // TODO
-//      User.findOrCreate({fid: fid} , function(err, user){
-//        if(err)
-//          return done(err);
-//      });
-            console.log('success login');
-            return done(null, profile);
+            User.findOne({facebookId: profile["id"]}, function (err, identity) {
+                if (err) {
+                    console.log('FindUserErr:' + err);
+                    return done(err);
+                }
+                if (identity) {
+                    // if already registerd user, use it
+                    return done(null, identity);
+                } else {
+                    // if user is not registerd, register it
+                    var user = new User();
+                    user.facebookId = profile["id"];
+                    user.name = profile["displayName"];
+                    user.save(function (err) {
+                        console.log("registered");
+                    });
+                    return done(null, user);
+                }
+            });
+            //var util = require('util');
+            //console.log(util.inspect(profile));
         });
     }
 ));
