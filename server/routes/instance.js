@@ -4,6 +4,7 @@ var AWS = require('aws-sdk');
 AWS.config.loadFromPath('config.json');
 
 var User = require('../models/user');
+var Execlog = require('../models/execlog');
 
 var ec2 = new AWS.EC2();
 var elb = new AWS.ELB();
@@ -14,24 +15,24 @@ function isAuthenticated(req, res, next) {
     res.send(401);
 }
 
-router.get('/test',function(req,res){
+router.get('/test', function (req, res) {
     var user = new User();
-    user.id="123";
+    user.id = "123";
     user.name = "hoge";
     user.facebookId = "facebookIDD";
 
-   user.save(function(err){
-       res.json({message:"OK"});
-   });
+    user.save(function (err) {
+        res.json({message: "OK"});
+    });
 });
 
-router.get('/test2', isAuthenticated, function(req,res){
+router.get('/test2', isAuthenticated, function (req, res) {
     console.log("youcansee auth page");
     //console.log(req);
     //res.end();
-    res.json({message:"you can see authed page"});
+    res.json({message: "you can see authed page"});
 });
-router.get('/test3', function(req,res){
+router.get('/test3', function (req, res) {
     console.log(req);
     res.end();
 });
@@ -80,7 +81,7 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/start/:id', function (req, res, next) {
+router.get('/start/:id', isAuthenticated, function (req, res, next) {
     var id = req.params.id;
     ec2.startInstances({InstanceIds: [id]}, function (err, data) {
         if (err) {
@@ -129,7 +130,7 @@ router.get('/start/:id', function (req, res, next) {
     });
 });
 
-router.get('/stop/:id', function (req, res,next) {
+router.get('/stop/:id', isAuthenticated, function (req, res, next) {
     ec2.stopInstances({InstanceIds: [req.params.id]}, function (err, data) {
         if (err) {
             return next(err);

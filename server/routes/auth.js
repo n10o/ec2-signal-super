@@ -16,24 +16,24 @@ passport.use(new FacebookStrategy({
             // TODO
         }
         process.nextTick(function () {
+            // facebookから帰ってきた情報を元に、本システム用のauth情報を取得or作成
             User.findOne({facebookId: profile["id"]}, function (err, identity) {
                 if (err) {
                     console.log('FindUserErr:' + err);
                     return done(err);
                 }
-                if (identity) {
-                    // if already registerd user, use it
-                    return done(null, identity);
-                } else {
-                    // if user is not registerd, register it
+                // if user is not registered, register it
+                if (!identity) {
                     var user = new User();
                     user.facebookId = profile["id"];
                     user.name = profile["displayName"];
                     user.save(function (err) {
+                        if(err) console.log(err);
                         console.log("registered");
                     });
                     return done(null, user);
                 }
+                return done(null, identity);
             });
             //var util = require('util');
             //console.log(util.inspect(profile));
@@ -41,10 +41,12 @@ passport.use(new FacebookStrategy({
     }
 ));
 
+// ここに入るのは整形済みのuser(identity)情報
 passport.serializeUser(function (user, done) {
     done(null, user);
 });
 
+// ここではuserを元にdbから情報引っ張ったほうがベター?
 passport.deserializeUser(function (user, done) {
     done(null, user);
 });
