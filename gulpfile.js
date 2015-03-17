@@ -58,4 +58,4 @@ gulp.task('express', function () {
 });
 
 //gulp.task('default', ['jade', 'stylus', 'js', 'watch', 'sync']);
-gulp.task('default', ['jade', 'stylus', 'js', 'watch', 'express']);
+gulp.task('default', ['jade', 'stylus', 'js', 'watch', 'express', 'sync']);

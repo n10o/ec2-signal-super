@@ -57,7 +57,7 @@ angular.module('signal', ['ui.router', 'ui.bootstrap'])
                 $state.go($state.current, {}, {reload: true});
             });
         };
-        // TODO これは全jsで使うので共通化(fatory?
+        // TODO これは全jsで使うので共通化(factory?
         $scope.isloggedin = function(){
             authCtrl.isloggedin().then(function(res){
                 //console.table(res);

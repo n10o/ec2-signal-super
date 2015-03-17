@@ -1,28 +1,36 @@
 doctype html
 html(ng-app='signal')
-    head
-        title Muneo Signal
-        link(rel='stylesheet', href='/css/main.css')
-        link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+  head
+    title Muneo Signal
+    link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/main.css')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Oswald')
+  body
+    div.container
+      nav.navbar.navbar-fixed-top.navbar-default.container(ng-controller='common')
+        div.navbar-header
+          button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-collapse")
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href="#") MUNEOSIGNAL
 
-    body
-        nav.navbar.navbar-fixed-top.container(ng-controller='common')
-            div.navbar-header
-                a.navbar-brand(href="#") Muneo Signal
-            div.collapse.navbar-collapse(collapse="navbarCollapsed")
-                ul.nav.navbar-nav
-                    li.active
-                        a(ui-sref='main') Main
-                    li
-                        a(ui-sref='setting') Setting
-                ul.nav.navbar-nav.navbar-right
-                    li(ng-hide="username")
-                        a(href="/auth/facebook/") Facebook Login
-                    li(ng-show="username")
-                        a(ng-click="logout()" href="#") Logout ({{ username }})
-        div.container(ui-view)
+        div.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(ui-sref='main') Instance List
+            li
+              a(ui-sref='setting') Setting
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(ng-hide="username" href="/auth/facebook/") Facebook Login
+              a(ng-show="username" ng-click="logout()" href="#") Logout ({{ username }})
+      div.contents(ui-view)
 
-        script(type='text/javascript', src='bower_components/angular/angular.min.js')
-        script(type='text/javascript',     src='bower_components/angular-ui-router/release/angular-ui-router.min.js')
-        script(type='text/javascript',     src='bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js')
-        script(type='text/javascript', src='scripts/application.js')
+    script(type='text/javascript', src='bower_components/jquery/dist/jquery.min.js')
+    script(type='text/javascript', src='bower_components/bootstrap/dist/js/bootstrap.min.js')
+    script(type='text/javascript', src='bower_components/angular/angular.min.js')
+    script(type='text/javascript', src='bower_components/angular-ui-router/release/angular-ui-router.min.js')
+    script(type='text/javascript',     src='bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js')
+    script(type='text/javascript', src='scripts/application.js')

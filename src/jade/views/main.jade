@@ -1,38 +1,43 @@
 div(ng-controller="MainCtrl")
-    div.row
-        div.information
-            alert(ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)")     {{alert.msg}}
-        div.btn-group
-            button.btn.btn-success(ng-model="radioModal" btn-radio="'dev'") DEV
-            button.btn.btn-success(ng-model="radioModal" btn-radio="'biz'") BIZ
-            button.btn.btn-success(ng-model="radioModal" btn-radio="") ALL
-        div.search
-            input(type="text" ng-model="keyword" placeholder="Filter Keyword")
-            span instances: {{ filteredInstanceList.length }}
+  div.row
+    div.information
+      alert(ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)") {{alert.msg}}
+    div.search
+      div.col-xs-5
+        form.form-inline
+          div.form-group.has-success.has-feedback.input-group
+            div.input-group-addon {{ filteredInstanceList.length }}台
+            input.form-control(type="text" ng-model="keyword" placeholeder="Filter Keyword")
+            span.glyphicon.glyphicon-search.form-control-feedback
+      div.col-xs-7
+        div.btn-group.btn-group.pull-right
+          button.btn.btn-success(ng-model="radioModal" btn-radio="'dev'") DEV
+          button.btn.btn-success(ng-model="radioModal" btn-radio="'biz'") BIZ
+          button.btn.btn-success(ng-model="radioModal" btn-radio="") ALL
 
-        table(class="table table-striped table-bordered table-hover")
-            thead
-                tr
-                    th
-                        a(href="" ng-click="predicate = 'Status'; reverse=!reverse") Status
-                    th
-                        a(href="" ng-click="predicate = 'TagName'; reverse=!reverse") Name
-                    th
-                        a(href="" ng-click="predicate = 'HostName'; reverse=!reverse") Hostname
-                    th
-                        a(href="" ng-click="predicate = 'ID'; reverse=!reverse") InstanceId
-                    th
-                        a(href="" ng-click="predicate = 'Env'; reverse=!reverse") Env
-                    th
-                        a(href="" ng-click="predicate = 'Signal'; reverse=!reverse") Signal
-            tbody(ng-hide="showLoading")
-                tr(ng-repeat="instance in filteredInstanceList = ( instanceList | filter:keyword |     filter:radioModal | orderBy:predicate:reverse)" ng-click="clickRow(instance.TagName)")
-                    td {{ instance.Status }}
-                    td {{ instance.TagName }}
-                    td {{ instance.HostName }}
-                    td {{ instance.ID }}
-                    td {{ instance.Env }}
-                    td {{ instance.Signal }}
-        div(ng-show="showLoading")
-        img(src="/images/loading.gif" height="30px")
-        span Now Loading...
+    table(class="table table-striped table-hover")
+      thead
+        tr
+          th
+            a(href="" ng-click="predicate = 'Status'; reverse=!reverse") Status
+          th
+            a(href="" ng-click="predicate = 'TagName'; reverse=!reverse") Name
+          th
+            a(href="" ng-click="predicate = 'HostName'; reverse=!reverse") Hostname
+          th
+            a(href="" ng-click="predicate = 'ID'; reverse=!reverse") InstanceId
+          th
+            a(href="" ng-click="predicate = 'Env'; reverse=!reverse") Env
+          th
+            a(href="" ng-click="predicate = 'Signal'; reverse=!reverse") Controllable
+      tbody(ng-hide="showLoading")
+        tr(ng-repeat="instance in filteredInstanceList = ( instanceList | filter:keyword | filter:radioModal | orderBy:predicate:reverse)" ng-click="clickRow(instance.TagName)")
+          td {{ instance.Status }}
+          td {{ instance.TagName }}
+          td {{ instance.HostName }}
+          td {{ instance.ID }}
+          td {{ instance.Env }}
+          td {{ instance.Signal }}
+    div(ng-show="showLoading")
+      img(src="/images/loading.gif" height="30px")
+      span Now Loading...
